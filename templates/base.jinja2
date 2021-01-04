@@ -3,6 +3,9 @@
 <title>Mailroom</title>
 </head>
 <body>
+	<a id="donations" href="{{ url_for('all') }}">All Donations</a>
+	<a id="create" href="{{ url_for('create') }}">New Donation</a>
+	<a id="login" href="{{ url_for('login') }}">Login</a>
 	<h1>Donations</h1>
 	<h2>{% block subtitle %} {% endblock subtitle %}</h2>
 	{% block content %} {% endblock content %}
