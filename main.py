@@ -25,8 +25,6 @@ def donation_by_donor():
         try:
             donor = Donor.select().where(Donor.name==request.form['donor']).get()
             donations = Donation.select().join(Donor).where(Donor.name==request.form['donor'])
-            for donation in donations:
-                print(f'{donation.donor.name=}: {donation.value}')
             return render_template('donor.jinja2', donations=donations)
         except Donor.DoesNotExist:
             error_msg = f'Donor {request.form["donor"]} does not exist'
@@ -57,10 +55,7 @@ def create():
         except Donor.DoesNotExist:
             donor = Donor(name=request.form['donor'])
             donor.save()
-        
-        print(f'{donor.name=}')
         d1 = Donation(donor=donor, value=amount)
-        print(f'{d1=}')
         d1.save()
         return redirect(url_for("all"))
     else:
