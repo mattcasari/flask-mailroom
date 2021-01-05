@@ -18,7 +18,29 @@ def home():
 def all():
     donations = Donation.select()
     return render_template('donations.jinja2', donations=donations)
+
+@app.route('/bydonor/', methods=["GET", "POST"])
+def donation_by_donor():
+    if request.method == "POST":
+        try:
+            donor = Donor.select().where(Donor.name==request.form['donor']).get()
+            donations = Donation.select().join(Donor).where(Donor.name==request.form['donor'])
+            for donation in donations:
+                print(f'{donation.donor.name=}: {donation.value}')
+            return render_template('donor.jinja2', donations=donations)
+        except Donor.DoesNotExist:
+            error_msg = f'Donor {request.form["donor"]} does not exist'
+            return render_template('donor.jinja2', error=error_msg)
+
+
+    else:
+        return render_template('donor.jinja2')
+
     
+def all():
+    donations = Donation.select()
+    return render_template('donations.jinja2', donations=donations)
+
 @app.route('/create/', methods=["GET", "POST"])
 def create():
     if "username" not in session:
