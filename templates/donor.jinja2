@@ -1,0 +1,27 @@
+{% extends 'base.jinja2' %}
+
+{% block subtitle %} Show Donor Donations {% endblock subtitle %}
+
+{% block content %}
+<form method="POST">
+    {% if error %}<p>{{ error }}</p>{% endif %}
+    <ul>
+        <label for="name-input">Donor name: </label><input id="name-input" type="text" name="donor"><br>
+        <input type="submit" value="Get donations">
+    </ul>
+</form>
+
+<form method="GET">
+    {% for donation in donations %}        
+        <li><b>{{ donation.donor.name }}</b>: {{ donation.value }}</li>
+    {% endfor %}
+</form>
+{% endblock content %}
+{# 
+{% for item in list1 %}
+
+    {{ item }}
+    {{ list2[loop.index0] }}
+    {{ list3[loop.index0] }}
+
+{% endfor %} #}
